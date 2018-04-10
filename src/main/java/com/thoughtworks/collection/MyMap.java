@@ -2,8 +2,9 @@ package com.thoughtworks.collection;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class MyMap {
 
@@ -17,22 +18,39 @@ public class MyMap {
     }
 
     public List<Integer> getTriple() {
-        throw new NotImplementedException();
+        return array.stream().map(x -> 3 * x).collect(Collectors.toList());
     }
 
     public List<String> mapLetter() {
-        throw new NotImplementedException();
+        return array.stream().map(x -> (Character.toString((char) (x + 96)))).collect(Collectors.toList());
     }
 
     public List<String> mapLetters() {
-        throw new NotImplementedException();
+        return array.stream()
+                .map(x -> {
+                    StringBuilder a = new StringBuilder();
+                    List<Integer> listArray = new ArrayList<>();
+                    while (x != 0 || x % 26 != 0) {
+                        x= x-1;
+                        listArray.add(x%26);
+                        x = x / 26;
+                    }
+                    Collections.reverse(listArray);
+                    for (Integer i:listArray) {
+                        a.append(letters[i]);
+                    }
+                    return a.toString();
+        })
+                .collect(Collectors.toList());
     }
 
     public List<Integer> sortFromBig() {
-        throw new NotImplementedException();
+        List<Integer> collect = array.stream().sorted().collect(Collectors.toList());
+        Collections.reverse(collect);
+        return collect;
     }
 
     public List<Integer> sortFromSmall() {
-        throw new NotImplementedException();
+        return array.stream().sorted().collect(Collectors.toList());
     }
 }
